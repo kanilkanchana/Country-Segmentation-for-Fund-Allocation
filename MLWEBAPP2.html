@@ -1,0 +1,157 @@
+<div id="wrap">
+<style>
+#wrap{
+  --ink:#10151B; --ink-2:#171D25; --paper:#F6F3EC;
+  --wire:#5B6470; --wire-soft:#38414C;
+  --clay:#C1502E; --clay-soft:rgba(193,80,46,0.16);
+  --amber:#D9A02C; --amber-soft:rgba(217,160,44,0.16);
+  --teal:#3E7A5E; --teal-soft:rgba(62,122,94,0.16);
+  --display:'Source Serif 4',Georgia,serif; --body:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  background:var(--ink); color:var(--paper); font-family:var(--body); padding:24px; border-radius:12px;
+}
+#wrap *{box-sizing:border-box;}
+#wrap .masthead{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;margin-bottom:24px;border-bottom:1px solid var(--wire-soft);flex-wrap:wrap;gap:10px;}
+#wrap .org-mark{font-family:var(--display);font-weight:700;font-size:1.05rem;}
+#wrap .org-mark-sub{font-weight:400;color:var(--wire);font-style:italic;}
+#wrap .report-tag{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.12em;color:var(--wire);text-transform:uppercase;}
+#wrap h1{font-family:var(--display);font-weight:600;font-size:1.7rem;line-height:1.1;margin:0 0 12px;color:var(--paper);}
+#wrap .brief-copy{font-size:0.9rem;line-height:1.6;color:#C7C2B4;max-width:640px;margin:0 0 28px;}
+#wrap .workspace{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:680px){#wrap .workspace{grid-template-columns:1fr;}}
+#wrap .panel{background:var(--ink-2);border:1px solid var(--wire-soft);border-radius:4px;padding:22px;}
+#wrap .panel-head{display:flex;align-items:baseline;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+#wrap .panel-num{font-family:var(--mono);font-size:0.62rem;letter-spacing:0.12em;color:var(--wire);border:1px solid var(--wire-soft);padding:3px 7px;border-radius:2px;}
+#wrap .panel-head h2{font-family:var(--display);font-weight:600;font-size:1.1rem;margin:0;flex:1;}
+#wrap .preset-btn{font-family:var(--mono);font-size:0.68rem;background:transparent;color:var(--amber);border:1px solid var(--amber);border-radius:999px;padding:6px 12px;cursor:pointer;}
+#wrap .preset-btn:hover{background:var(--amber);color:var(--ink);}
+#wrap .field-group{margin-bottom:24px;}
+#wrap .group-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--wire);margin:0 0 14px;display:flex;align-items:center;gap:7px;}
+#wrap .swatch{width:7px;height:7px;border-radius:50%;display:inline-block;}
+#wrap .swatch-health{background:var(--teal);} #wrap .swatch-econ{background:var(--amber);}
+#wrap .field{margin-bottom:18px;}
+#wrap .field-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;font-size:0.82rem;}
+#wrap .field-value{font-family:var(--mono);color:var(--amber);font-size:0.85rem;}
+#wrap .field-value .unit{font-family:var(--body);font-size:0.62rem;color:var(--wire);margin-left:4px;}
+#wrap input[type=range]{width:100%;height:4px;background:var(--wire-soft);border-radius:999px;outline:none;-webkit-appearance:none;}
+#wrap input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--amber);border:2px solid var(--ink-2);box-shadow:0 0 0 1px var(--amber);cursor:pointer;}
+#wrap .verdict-card{display:flex;align-items:center;gap:14px;padding:18px;border-radius:4px;margin-bottom:22px;border:1px solid var(--wire-soft);transition:background .2s,border-color .2s;}
+#wrap .verdict-card[data-tier=underdeveloped]{background:var(--clay-soft);border-color:var(--clay);}
+#wrap .verdict-card[data-tier=developing]{background:var(--amber-soft);border-color:var(--amber);}
+#wrap .verdict-card[data-tier=developed]{background:var(--teal-soft);border-color:var(--teal);}
+#wrap .verdict-emoji{font-size:1.8rem;}
+#wrap .verdict-label-tag{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:var(--wire);display:block;}
+#wrap .verdict-label{font-family:var(--display);font-weight:700;font-size:1.25rem;display:block;}
+#wrap .verdict-sub{font-size:0.78rem;color:#C7C2B4;}
+#wrap .distance-rows{display:flex;flex-direction:column;gap:11px;margin-bottom:22px;}
+#wrap .distance-row{display:grid;grid-template-columns:100px 1fr 50px;align-items:center;gap:10px;}
+#wrap .distance-row-label{font-size:0.76rem;display:flex;align-items:center;gap:6px;}
+#wrap .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+#wrap .dot-underdeveloped,#wrap .fill-underdeveloped{background:var(--clay);}
+#wrap .dot-developing,#wrap .fill-developing{background:var(--amber);}
+#wrap .dot-developed,#wrap .fill-developed{background:var(--teal);}
+#wrap .distance-track{position:relative;height:7px;background:var(--wire-soft);border-radius:999px;overflow:hidden;}
+#wrap .distance-fill{position:absolute;inset:0 auto 0 0;border-radius:999px;transition:width .3s;}
+#wrap .distance-num{font-family:var(--mono);font-size:0.72rem;text-align:right;color:#C7C2B4;}
+#wrap .compare-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:22px;}
+#wrap .compare-cell{border:1px solid var(--wire-soft);border-radius:4px;padding:10px 8px;text-align:center;}
+#wrap .compare-cell-label{font-family:var(--mono);font-size:0.56rem;letter-spacing:0.05em;text-transform:uppercase;color:var(--wire);display:block;margin-bottom:6px;}
+#wrap .compare-cell-you{font-family:var(--mono);font-size:0.88rem;color:var(--amber);display:block;}
+#wrap .compare-cell-avg{font-family:var(--mono);font-size:0.68rem;color:#6B7480;display:block;margin-top:2px;}
+#wrap .engineered-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding-top:18px;border-top:1px dashed var(--wire-soft);}
+@media(max-width:680px){#wrap .engineered-row{grid-template-columns:1fr;} #wrap .compare-grid{grid-template-columns:1fr;}}
+#wrap .eng-name{font-size:0.76rem;display:block;}
+#wrap .eng-formula{font-family:var(--mono);font-size:0.6rem;color:var(--wire);display:block;}
+#wrap .eng-value{font-family:var(--mono);font-size:0.95rem;color:var(--amber);display:block;margin-top:2px;}
+#wrap .field-bounds{display:flex;justify-content:space-between;font-family:var(--mono);font-size:0.56rem;color:#4A535F;margin-top:4px;}
+</style>
+<h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;">HELP International country segmentation predictor: adjust country indicators to see predicted development tier</h2>
+<div class="masthead">
+  <div><span class="org-mark">HELP <span class="org-mark-sub">International</span></span></div>
+  <span class="report-tag">FUND ALLOCATION INSTRUMENT</span>
+</div>
+<h1>Country Segmentation<br>for Aid Prioritisation</h1>
+<p class="brief-copy">Enter a country's indicators below. The instrument standardises them, derives 3 engineered features, and finds the nearest of 3 centroids fitted on 167 countries.</p>
+<div class="workspace">
+  <section class="panel">
+    <div class="panel-head"><span class="panel-num">INPUT</span><h2>Indicators</h2><button class="preset-btn" id="randomBtn" type="button">⟲ Sample</button></div>
+    <div class="field-group">
+      <h3 class="group-label"><span class="swatch swatch-health"></span>Health &amp; Demographics</h3>
+      <div class="field"><div class="field-top"><label>Child mortality</label><span class="field-value"><span id="child_mort_val">45.0</span><span class="unit">per 1,000</span></span></div>
+        <input type="range" id="child_mort" min="2.6" max="208" step="0.1" value="45.0"><div class="field-bounds"><span>2.6</span><span>208</span></div></div>
+      <div class="field"><div class="field-top"><label>Life expectancy</label><span class="field-value"><span id="life_expec_val">68.0</span><span class="unit">years</span></span></div>
+        <input type="range" id="life_expec" min="32.1" max="82.8" step="0.1" value="68.0"><div class="field-bounds"><span>32.1</span><span>82.8</span></div></div>
+      <div class="field"><div class="field-top"><label>Fertility rate</label><span class="field-value"><span id="total_fer_val">3.20</span><span class="unit">per woman</span></span></div>
+        <input type="range" id="total_fer" min="1.15" max="7.49" step="0.01" value="3.20"><div class="field-bounds"><span>1.15</span><span>7.49</span></div></div>
+      <div class="field"><div class="field-top"><label>Health spend</label><span class="field-value"><span id="health_val">6.50</span><span class="unit">% GDP</span></span></div>
+        <input type="range" id="health" min="1.81" max="17.9" step="0.01" value="6.5"><div class="field-bounds"><span>1.81</span><span>17.9</span></div></div>
+    </div>
+    <div class="field-group">
+      <h3 class="group-label"><span class="swatch swatch-econ"></span>Economy</h3>
+      <div class="field"><div class="field-top"><label>Income/person</label><span class="field-value">$<span id="income_val">12,000</span></span></div>
+        <input type="range" id="income" min="609" max="125000" step="1" value="12000"><div class="field-bounds"><span>$609</span><span>$125k</span></div></div>
+      <div class="field"><div class="field-top"><label>GDP per capita</label><span class="field-value">$<span id="gdpp_val">9,000</span></span></div>
+        <input type="range" id="gdpp" min="231" max="105000" step="1" value="9000"><div class="field-bounds"><span>$231</span><span>$105k</span></div></div>
+      <div class="field"><div class="field-top"><label>Exports</label><span class="field-value"><span id="exports_val">40.0</span><span class="unit">% GDP</span></span></div>
+        <input type="range" id="exports" min="0.1" max="200" step="0.1" value="40.0"><div class="field-bounds"><span>0.1</span><span>200</span></div></div>
+      <div class="field"><div class="field-top"><label>Imports</label><span class="field-value"><span id="imports_val">46.0</span><span class="unit">% GDP</span></span></div>
+        <input type="range" id="imports" min="0.1" max="174" step="0.1" value="46.0"><div class="field-bounds"><span>0.1</span><span>174</span></div></div>
+      <div class="field"><div class="field-top"><label>Inflation</label><span class="field-value"><span id="inflation_val">7.5</span><span class="unit">% / yr</span></span></div>
+        <input type="range" id="inflation" min="-4.21" max="104" step="0.1" value="7.5"><div class="field-bounds"><span>-4.2</span><span>104</span></div></div>
+    </div>
+  </section>
+  <section class="panel">
+    <div class="panel-head"><span class="panel-num">OUTPUT</span><h2>Predicted Tier</h2></div>
+    <div class="verdict-card" id="verdictCard" data-tier="developing">
+      <div class="verdict-emoji" id="verdictEmoji">🟡</div>
+      <div><span class="verdict-label-tag">CLUSTER ASSIGNMENT</span><span class="verdict-label" id="verdictLabel">—</span><span class="verdict-sub" id="verdictSub">—</span></div>
+    </div>
+    <h3 class="group-label">Distance to Each Centroid</h3>
+    <div class="distance-rows" id="distanceRows"></div>
+    <h3 class="group-label">Your Country vs. Cluster Average</h3>
+    <div class="compare-grid" id="compareGrid"></div>
+    <div class="engineered-row" id="engRow">
+      <div><span class="eng-name">Trade openness</span><span class="eng-formula">exports + imports</span><span class="eng-value" id="eng_trade">—</span></div>
+      <div><span class="eng-name">Health-income ratio</span><span class="eng-formula">(health/100) × gdpp</span><span class="eng-value" id="eng_hir">—</span></div>
+      <div><span class="eng-name">Mortality-fertility idx</span><span class="eng-formula">child_mort × total_fer</span><span class="eng-value" id="eng_mfi">—</span></div>
+    </div>
+  </section>
+</div>
+</div>
+<script>
+const MODEL={features:["child_mort","exports","health","imports","income","inflation","life_expec","total_fer","gdpp","trade_openness","health_income_ratio","mortality_fertility_index"],scalerMean:[38.27005988023952,41.108976047904186,6.8156886227544895,46.89021497005987,17144.688622754493,7.781832335329342,70.55568862275449,2.947964071856287,12964.155688622754,87.99919101796408,1056.7332041916168,164.30973652694607],scalerScale:[40.208004855842226,27.32981499352428,2.73860108505131,24.136996342000135,19220.26226708728,10.539007566505427,8.866505666235797,1.5093082600512293,18273.746049847687,47.982852537225014,1796.0073674483933,229.1770064109301],centroids:[[-0.8298580096145033,0.6150709017268812,0.8034207279240478,0.1494245588322966,1.5780383719936562,-0.4818665138327877,1.1197969922981688,-0.777774562643977,1.7712347661549683,0.4254943777299794,1.6899904133581447,-0.6780637113668782],[-0.3938069141155464,0.0075817832924814045,-0.1792542976552715,0.03835268947617494,-0.21047837100782568,-0.03338278899070783,0.21033805439954234,-0.41354025585801457,-0.3243667063605133,0.02361109022057136,-0.33395897299846783,-0.46210421411167674],[1.4601323815417295,-0.47394867251554523,-0.21437367230894058,-0.1932565887079426,-0.7240283202576057,0.43002197743707743,-1.2833629013557957,1.463592780082434,-0.6241343146928314,-0.36716372994539376,-0.5431504118977113,1.493293638651497]],clusterLabels:{0:"Developed",1:"Developing",2:"Underdeveloped"},clusterProfiles:{0:{child_mort:4.903125,life_expec:80.484375,gdpp:45331.25},1:{child_mort:22.43586956521739,life_expec:72.42065217391304,gdpp:7036.760869565217},2:{child_mort:96.97906976744187,life_expec:59.17674418604651,gdpp:1558.8837209302326}}};
+const TIER_META={Developed:{emoji:"🟢",sub:"Lowest priority — strong indicators across the board",key:"developed"},Developing:{emoji:"🟡",sub:"Moderate priority for fund allocation",key:"developing"},Underdeveloped:{emoji:"🔴",sub:"Highest priority — most urgent need of assistance",key:"underdeveloped"}};
+function classifyCountry(raw){const eng={trade_openness:raw.exports+raw.imports,health_income_ratio:(raw.health/100)*raw.gdpp,mortality_fertility_index:raw.child_mort*raw.total_fer};const full={...raw,...eng};const vec=MODEL.features.map(f=>full[f]);const scaled=vec.map((v,i)=>(v-MODEL.scalerMean[i])/MODEL.scalerScale[i]);const dist=MODEL.centroids.map(c=>Math.sqrt(c.reduce((s,cv,i)=>s+(cv-scaled[i])**2,0)));let cl=0;for(let i=1;i<3;i++)if(dist[i]<dist[cl])cl=i;return{cluster:cl,label:MODEL.clusterLabels[cl],distances:dist,engineered:eng};}
+const RAW_FEATURES=["child_mort","life_expec","total_fer","health","income","gdpp","exports","imports","inflation"];
+const FMT={child_mort:v=>v.toFixed(1),life_expec:v=>v.toFixed(1),total_fer:v=>v.toFixed(2),health:v=>v.toFixed(2),income:v=>Math.round(v).toLocaleString("en-US"),gdpp:v=>Math.round(v).toLocaleString("en-US"),exports:v=>v.toFixed(1),imports:v=>v.toFixed(1),inflation:v=>v.toFixed(1)};
+const CLUSTER_ORDER=[2,1,0];
+const SAMPLES=[{country:"Afghanistan",child_mort:90.2,exports:10,health:7.58,imports:44.9,income:1610,inflation:9.44,life_expec:56.2,total_fer:5.82,gdpp:553},{country:"Germany",child_mort:4.2,exports:42.3,health:11.6,imports:37.1,income:40400,inflation:0.758,life_expec:80.1,total_fer:1.39,gdpp:41800},{country:"India",child_mort:58.8,exports:22.6,health:4.05,imports:27.1,income:4410,inflation:8.98,life_expec:66.2,total_fer:2.6,gdpp:1350},{country:"Brazil",child_mort:19.8,exports:10.7,health:9.01,imports:11.8,income:14500,inflation:8.41,life_expec:74.2,total_fer:1.8,gdpp:11200},{country:"Haiti",child_mort:208,exports:15.3,health:6.91,imports:64.7,income:1500,inflation:5.45,life_expec:32.1,total_fer:3.33,gdpp:662},{country:"Norway",child_mort:3.2,exports:39.7,health:9.48,imports:28.5,income:62300,inflation:5.95,life_expec:81,total_fer:1.95,gdpp:87800}];
+function getRaw(){const r={};RAW_FEATURES.forEach(f=>r[f]=parseFloat(document.getElementById(f).value));return r;}
+function setSliders(v){RAW_FEATURES.forEach(f=>{const el=document.getElementById(f);el.value=v[f];updateDisplay(f,v[f]);});}
+function updateDisplay(f,v){const l=document.getElementById(f+"_val");if(l)l.textContent=FMT[f](v);}
+function run(){
+  const raw=getRaw();const result=classifyCountry(raw);
+  const meta=TIER_META[result.label];
+  const card=document.getElementById("verdictCard");card.setAttribute("data-tier",meta.key);
+  document.getElementById("verdictEmoji").textContent=meta.emoji;
+  document.getElementById("verdictLabel").textContent=result.label;
+  document.getElementById("verdictSub").textContent=meta.sub;
+  const container=document.getElementById("distanceRows");container.innerHTML="";
+  const maxDist=Math.max(...result.distances,0.001);
+  const LABELS={0:"Developed",1:"Developing",2:"Underdeveloped"};const KEYS={0:"developed",1:"developing",2:"underdeveloped"};
+  CLUSTER_ORDER.forEach(ci=>{
+    const dist=result.distances[ci];const pct=Math.max(4,100-(dist/maxDist)*100);
+    const row=document.createElement("div");row.className="distance-row";
+    row.innerHTML='<span class="distance-row-label"><span class="dot dot-'+KEYS[ci]+'"></span>'+LABELS[ci]+'</span><span class="distance-track"><span class="distance-fill fill-'+KEYS[ci]+'" style="width:'+pct+'%"></span></span><span class="distance-num">'+dist.toFixed(2)+'</span>';
+    container.appendChild(row);
+  });
+  const profile=MODEL.clusterProfiles[result.cluster];
+  const rows=[{l:"Child mort.",you:raw.child_mort.toFixed(1),avg:profile.child_mort.toFixed(1)},{l:"Life exp.",you:raw.life_expec.toFixed(1),avg:profile.life_expec.toFixed(1)},{l:"GDP/cap",you:"$"+Math.round(raw.gdpp).toLocaleString("en-US"),avg:"$"+Math.round(profile.gdpp).toLocaleString("en-US")}];
+  document.getElementById("compareGrid").innerHTML=rows.map(r=>'<div class="compare-cell"><span class="compare-cell-label">'+r.l+'</span><span class="compare-cell-you">'+r.you+'</span><span class="compare-cell-avg">avg '+r.avg+'</span></div>').join("");
+  document.getElementById("eng_trade").textContent=result.engineered.trade_openness.toFixed(1);
+  document.getElementById("eng_hir").textContent=result.engineered.health_income_ratio.toFixed(1);
+  document.getElementById("eng_mfi").textContent=result.engineered.mortality_fertility_index.toFixed(1);
+}
+RAW_FEATURES.forEach(f=>{const el=document.getElementById(f);el.addEventListener("input",()=>{updateDisplay(f,parseFloat(el.value));run();});});
+document.getElementById("randomBtn").addEventListener("click",()=>{const pick=SAMPLES[Math.floor(Math.random()*SAMPLES.length)];setSliders(pick);run();});
+run();
+</script>
